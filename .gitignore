@@ -1,0 +1,16 @@
+
+# Dependencies and build output
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+.venv/
+backend/.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+
+__pycache__/
+*.pyc
