@@ -27,6 +27,18 @@ function parseMessage(data: string): RealtimeMessage {
   }
 }
 
+function normalizeBinaryPayload(payload: RealtimeBinaryPayload): Blob | ArrayBuffer {
+  if (payload instanceof Blob) {
+    return payload;
+  }
+
+  if (payload instanceof ArrayBuffer) {
+    return payload;
+  }
+
+  return new Uint8Array(payload.buffer, payload.byteOffset, payload.byteLength).slice().buffer;
+}
+
 export function createRealtimeSocket(
   callbacks: RealtimeSocketCallbacks = {},
   url: string = WS_URL,
@@ -65,7 +77,7 @@ export function createRealtimeSocket(
     },
     sendBinary: (payload: RealtimeBinaryPayload) => {
       if (socket.readyState === WebSocket.OPEN) {
-        socket.send(payload);
+        socket.send(normalizeBinaryPayload(payload));
         return true;
       }
 
