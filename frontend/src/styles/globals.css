@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+
+  /* ── App identity: black / cyan / orange ───────────────────────── */
+  --app-bg: #000000;
+  --app-bg-soft: #050505;
+  --app-surface: rgba(255, 255, 255, 0.055);
+  --app-surface-strong: rgba(255, 255, 255, 0.085);
+  --app-surface-hover: rgba(255, 255, 255, 0.12);
+  --app-border: rgba(255, 255, 255, 0.10);
+  --app-border-strong: rgba(255, 255, 255, 0.22);
+
+  --app-text: #ffffff;
+  --app-text-soft: rgba(255, 255, 255, 0.72);
+  --app-text-muted: rgba(255, 255, 255, 0.50);
+  --app-text-faint: rgba(255, 255, 255, 0.34);
+
+  --app-cyan: #06b6d4;
+  --app-cyan-bright: #22d3ee;
+  --app-cyan-deep: #0891b2;
+  --app-cyan-dark: #164e63;
+  --app-orange: #f97316;
+
+  --app-cyan-glow: rgba(6, 182, 212, 0.22);
+  --app-orange-glow: rgba(249, 115, 22, 0.20);
+
+  /* Surface — black scale */
+  --bg-0: #000000;
+  --bg-1: #050505;
+  --bg-2: #0B0B0B;
+  --bg-3: #141414;
+  --bg-4: #1C1C1C;
+
+  /* Borders — white overlays */
+  --line-1: rgba(255, 255, 255, 0.10);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --line-3: rgba(255, 255, 255, 0.22);
+
+  /* Text — white ramp */
+  --ink-0: #FFFFFF;
+  --ink-1: rgba(255, 255, 255, 0.72);
+  --ink-2: rgba(255, 255, 255, 0.55);
+  --ink-3: rgba(255, 255, 255, 0.40);
+  --ink-4: rgba(255, 255, 255, 0.26);
+
+  /* Semantic */
+  --success: #10B981;
+  --amber: #F97316;
+  --red: #EF4444;
+  --info: #06B6D4;
+
+  /* Shadows */
+  --shadow-card: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px -16px rgba(0, 0, 0, 0.8);
+  --shadow-pop: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+    0 24px 60px -24px rgba(0, 0, 0, 0.85);
+
+  font-family: "Geist", Inter, ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg-0);
+  color: var(--ink-0);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(900px 480px at 90% -10%, rgba(6, 182, 212, 0.08), transparent 60%),
+    radial-gradient(700px 420px at -10% 100%, rgba(249, 115, 22, 0.06), transparent 60%),
+    #000000;
+  background-attachment: fixed;
+  color: #ffffff;
+  font-family: "Geist", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(6, 182, 212, 0.32);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ---- Reusable theme layer: glass surfaces + calm app backgrounds ---- */
+.app-glass {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.app-glass-strong {
+  background: var(--app-surface-strong);
+  border: 1px solid var(--app-border-strong);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+/* Calmer black/cyan/orange wash for dashboard / practice / settings */
+.app-page-bg {
+  background:
+    radial-gradient(900px 480px at 90% -10%, rgba(6, 182, 212, 0.08), transparent 60%),
+    radial-gradient(700px 420px at -10% 100%, rgba(249, 115, 22, 0.06), transparent 60%),
+    #000000;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Toggle (spec §3.2 — knob stays inside track at every zoom) ---- */
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--bg-4);
+  border: 1px solid var(--line-2);
+  display: inline-block;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+  padding: 0;
+}
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink-2);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 180ms ease;
+}
+.toggle.on {
+  background: var(--app-cyan);
+  border-color: var(--app-cyan-deep);
+}
+.toggle.on::after {
+  background: #fff;
+  transform: translateX(16px);
+}
+.toggle.amber.on {
+  background: var(--amber);
+  border-color: #b45309;
+}
+.toggle:focus-visible {
+  outline: 2px solid var(--app-cyan-bright);
+  outline-offset: 2px;
+}
+
+/* ---- Typography helpers ---- */
+.eyebrow {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.label-mono {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
