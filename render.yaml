@@ -24,7 +24,6 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
-      # Provider keys (Secrets to be added via Render Dashboard)
       - key: OPENAI_API_KEY
         sync: false
       - key: GEMINI_API_KEY
@@ -32,13 +31,12 @@ services:
       - key: DEEPGRAM_API_KEY
         sync: false
 
-  # --- Frontend Static Site (Served as a Web Service) ---
+  # --- Frontend Static Site ---
   - type: web
     name: pitchpilot-frontend
     runtime: static
     rootDir: frontend
-    plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     staticPublishPath: dist
     routes:
       - source: /*
